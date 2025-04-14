@@ -179,7 +179,7 @@ function getResultsHTML()
 	var result = "{\n";
 	for (var i = 0; i < NUM_SCALES; i++)
 	{
-		result += "\t"+label[i]+": [ ";
+		result += "\t\""+label[i]+"\": [ ";
 		
 		result += results_rating[i];
 		result += ", ";
@@ -190,7 +190,7 @@ function getResultsHTML()
 		result += results_weight[i];
 		result += "],\n";
 	}
-	result += "\tscore: ";
+	result += "\t\"score\": ";
 	result += results_overall;
 	result += "\n}";
 
