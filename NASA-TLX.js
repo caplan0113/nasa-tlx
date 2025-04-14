@@ -3,34 +3,41 @@ var scale      = new Array();
 var left       = new Array();
 var right      = new Array();
 var def        = new Array();
+var label      = new Array();
 var NUM_SCALES = 6;
 
-scale[0]  = "知的・知覚的要求"; 
+scale[0]  = "知的・知覚的要求";
+label[0] = "mental";
 left[0]   = "小さい";
 right[0]  = "大きい";
 def[0]    = "<p>どの程度の知的・知覚的活動(考える、決める、計算する、記憶する、見るなど)を必要としましたか。<br>課題はやさしかったですか。それとも難しかったですか。<br>単純でしたか。それとも複雑でしたか。<br>正確さが求められましたか。それとも大ざっぱでよかったですか。</p>";
 
 scale[1]  = "身体的要求"; 
+label[1] = "physical";
 left[1]   = "小さい";
 right[1]  = "大きい";
 def[1]    = "<p>どの程度の身体的活動(押す、引く、回す、制御する、動き回るなど)を必要としましたか。<br>作業はラクでしたか。それともキツかったですか。<br>ゆっくりできましたか。それともキビキビやらなければなりませんでしたか。<br>休み休みできましたか。それとも働きづめでしたか。</p>";
 
 scale[2]  = "タイムプレッシャー"; 
+label[2] = "temporal";
 left[2]   = "弱い";
 right[2]  = "強い";
 def[2]    = "<p>仕事のペースや課題が発生する頻度のために感じる時間的切迫感はどの程度でしたか。<br>ペースはゆっくりとして余裕があるものでしたか。それとも速くて余裕のないものでしたか。</p>";
 
 scale[3]  = "作業成績"; 
+label[3] = "performance";
 left[3]   = "良い";
 right[3]  = "悪い";
 def[3]    = "<p>作業指示者によって設定された課題の目標をどの程度達成できたと思いますか。<br>目標の達成に関して自分の作業成績にどの程度満足していますか。</p>";
 
 scale[4]  = "努力"; 
+label[4] = "effort";
 left[4]   = "少ない";
 right[4]  = "多い";
 def[4]    = "<p>作業成績のレベルを達成・維持するために、精神的・身体的にどの程度一生懸命に作業しなければなりませんでしたか。</p>";
 
 scale[5]  = "フラストレーション"; 
+label[5] = "frustration";
 left[5]   = "低い";
 right[5]  = "高い";
 def[5]    = "<p>作業中に、不安感、落胆、いらいら、ストレス、悩みをどの程度感じましたか。あるいは逆に、安心感、満足感、充足感、楽しさ、リラックスをどの程度感じましたか。</p>";
@@ -69,12 +76,12 @@ let pair_num = 0;
 
 function clicked1() {
 	//alert("次に15の質問をします。それぞれで、どちらがより作業負荷に直結した要因か選んでください。");
-	results_rating[0] = Math.floor(document.getElementById("mental").value / 5) * 5;
-	results_rating[1] = Math.floor(document.getElementById("physical").value / 5) * 5;
-	results_rating[2] = Math.floor(document.getElementById("temporal").value / 5) * 5;
-	results_rating[3] = Math.floor(document.getElementById("performance").value / 5) * 5;
-	results_rating[4] = Math.floor(document.getElementById("effort").value / 5) * 5;
-	results_rating[5] = Math.floor(document.getElementById("frustration").value / 5) * 5;
+	results_rating[0] = Math.ceil(document.getElementById("mental").value / 5) * 5;
+	results_rating[1] = Math.ceil(document.getElementById("physical").value / 5) * 5;
+	results_rating[2] = Math.ceil(document.getElementById("temporal").value / 5) * 5;
+	results_rating[3] = Math.ceil(document.getElementById("performance").value / 5) * 5;
+	results_rating[4] = Math.ceil(document.getElementById("effort").value / 5) * 5;
+	results_rating[5] = Math.ceil(document.getElementById("frustration").value / 5) * 5;
 	// let str = `<h3>${results_rating.join(", ")}</h3>`;
 	// let element = document.getElementById("div2");
 	// element.insertAdjacentHTML("afterbegin", str);
@@ -169,29 +176,23 @@ function calcResults()
 // Output the table of results
 function getResultsHTML()
 {
-	var result = "";
+	var result = "{\n";
 	for (var i = 0; i < NUM_SCALES; i++)
 	{
-		result += "\n";
-		result += scale[i];
-		result += ",";
-
-
+		result += "\t"+label[i]+": [ ";
+		
 		result += results_rating[i];
-		result += ",";
+		result += ", ";
 
 		result += results_tally[i];
-		result += ",";
+		result += ", ";
 
-		result += "";
 		result += results_weight[i];
-		result += ",";
+		result += "],\n";
 	}
-
-	result += "\n";
-	result += "総合スコア,";
+	result += "\tscore: ";
 	result += results_overall;
-	result += ",";
+	result += "\n}";
 
 	return result;
 }
