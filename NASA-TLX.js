@@ -176,10 +176,10 @@ function calcResults()
 // Output the table of results
 function getResultsHTML()
 {
-	var result = "{\n";
+	var result = "{";
 	for (var i = 0; i < NUM_SCALES; i++)
 	{
-		result += "\t\""+label[i]+"\": [ ";
+		result += "\""+label[i]+"\": [ ";
 		
 		result += results_rating[i];
 		result += ", ";
@@ -188,11 +188,11 @@ function getResultsHTML()
 		result += ", ";
 
 		result += results_weight[i];
-		result += "],\n";
+		result += "],";
 	}
-	result += "\t\"score\": ";
+	result += "\"score\": ";
 	result += results_overall;
-	result += "\n}";
+	result += "}";
 
 	return result;
 }
